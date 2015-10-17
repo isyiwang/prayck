@@ -1,0 +1,4 @@
+include ':app'
+
+include ':ymagine'
+project(':ymagine').projectDir = new File(settingsDir, '../../../framework/ymagine')
