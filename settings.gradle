@@ -1,4 +1,4 @@
 include ':prayer'
 
-//include ':stackblur:StackBlur'
-//project(':stackblur').projectDir = new File(settingsDir, '../framework/stackblur')
+include ':stackblur'
+project(':stackblur').projectDir = new File(settingsDir, '../framework/stackblur')
