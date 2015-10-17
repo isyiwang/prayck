@@ -1,4 +1,4 @@
-include ':app'
+include ':prayer'
 
 include ':ymagine'
-project(':ymagine').projectDir = new File(settingsDir, '../../../framework/ymagine')
+project(':ymagine').projectDir = new File(settingsDir, '../framework/ymagine')
