@@ -27,15 +27,11 @@ import com.squareup.picasso.Picasso;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final int FADE_IN_TEXT_MS = 5000;
-    private static final int ZOOM_IN_TEXT_MS = 25000;
     private static final int BLUR_RADIUS = 30;
 
     private ImageView mBackgroundView;
     private KenBurnsView mBlurredBackgroundView;
     private TextView mTextView;
-    private ObjectAnimator mAnimator;
-    private boolean mUseVerse;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,12 +39,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mBackgroundView = (ImageView) findViewById(R.id.background);
-        mBackgroundView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                togglePromise();
-            }
-        });
 
         mBlurredBackgroundView = (KenBurnsView) findViewById(R.id.blurred_background);
         Typeface typeface = Typeface.createFromAsset(getAssets(), "questrial.ttf");
@@ -60,50 +50,11 @@ public class MainActivity extends AppCompatActivity {
         }
 
         asyncLoadImage(R.drawable.forest);
-        fadeInPromise(getPromise());
     }
 
     private Promises.Promise getPromise() {
         int promiseIndex = getPromiseIndex();
         return Promises.PROMISES.get(promiseIndex);
-    }
-
-    private void fadeInPromise(Promises.Promise promise) {
-        String text = mUseVerse ? promise.verse : promise.prayer;
-        fadeInText(text);
-    }
-
-    private void togglePromise() {
-        mUseVerse = !mUseVerse;
-
-        if (mAnimator != null) {
-            mAnimator.cancel();
-            mAnimator.addListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    super.onAnimationEnd(animation);
-
-                    fadeInPromise(getPromise());
-                }
-            });
-            mAnimator.setFloatValues(0, (float) mAnimator.getAnimatedValue());
-            mAnimator.setDuration(650);
-            mAnimator.reverse();
-        }
-    }
-
-    private void fadeInText(String text) {
-        text = text.toUpperCase();
-        mTextView.setAlpha(0.0f);
-        mTextView.setText(text);
-        mAnimator = ObjectAnimator.ofFloat(mTextView, "alpha", 0.0f, 1.0f).setDuration(FADE_IN_TEXT_MS);
-        mAnimator.start();
-
-        ScaleAnimation scale = new ScaleAnimation(1f, 1.15f, 1f, 1.15f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-        scale.setFillAfter(true);
-        scale.setDuration(ZOOM_IN_TEXT_MS);
-        scale.setInterpolator(new AccelerateInterpolator());
-        mTextView.setAnimation(scale);
     }
 
     /**
