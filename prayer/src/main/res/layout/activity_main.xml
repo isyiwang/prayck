@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <com.flaviofaria.kenburnsview.KenBurnsView
+    <ImageView
         android:id="@+id/blurred_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
@@ -16,15 +16,50 @@
         android:layout_height="match_parent" />
 
     <View
+        android:id="@+id/overlay_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#68000000" />
+        android:background="#000000" />
 
-    <TextView
-        android:id="@+id/textview"
+    <znc.prayer.MyScrollView
+        android:id="@+id/scrollview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="25dp"
-        android:textStyle="bold"
-        android:gravity="center" />
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/title"
+                style="@style/TextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="25dp"
+                android:layout_marginTop="@dimen/title_margin"
+                android:layout_marginBottom="@dimen/title_margin"
+                android:textStyle="bold"
+                android:gravity="center" />
+
+            <TextView
+                android:id="@+id/verse"
+                style="@style/TextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="25dp"
+                android:textStyle="bold"
+                android:gravity="center" />
+
+            <TextView
+                android:id="@+id/prayer"
+                style="@style/TextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="25dp"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:gravity="start" />
+        </LinearLayout>
+    </znc.prayer.MyScrollView>
 </RelativeLayout>

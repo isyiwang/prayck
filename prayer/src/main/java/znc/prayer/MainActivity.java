@@ -1,37 +1,34 @@
 package znc.prayer;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.animation.ObjectAnimator;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.view.animation.DecelerateInterpolator;
-import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.commit451.nativestackblur.NativeStackBlur;
-import com.flaviofaria.kenburnsview.KenBurnsView;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final int BLUR_RADIUS = 30;
+    private static final int BLUR_RADIUS = 50;
+    private static final float BLUR_Y_THRESHOLD = 400f;
+    private static final float MIN_OVERLAY_ALPHA = 0.1f;
+    private static final float MAX_OVERLAY_ALPHA = 0.33f;
 
     private ImageView mBackgroundView;
-    private KenBurnsView mBlurredBackgroundView;
-    private TextView mTextView;
+    private ImageView mBlurredBackgroundView;
+    private View mOverlayView;
+    private TextView mTitleView;
+    private TextView mVerseView;
+    private TextView mPrayerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,17 +36,46 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mBackgroundView = (ImageView) findViewById(R.id.background);
-
-        mBlurredBackgroundView = (KenBurnsView) findViewById(R.id.blurred_background);
+        mOverlayView = findViewById(R.id.overlay_view);
+        mOverlayView.setAlpha(MIN_OVERLAY_ALPHA);
+        mBlurredBackgroundView = (ImageView) findViewById(R.id.blurred_background);
         Typeface typeface = Typeface.createFromAsset(getAssets(), "questrial.ttf");
-        mTextView = (TextView) findViewById(R.id.textview);
-        mTextView.setTypeface(typeface);
+        mTitleView = (TextView) findViewById(R.id.title);
+        mTitleView.setTypeface(typeface);
+
+        mVerseView = (TextView) findViewById(R.id.verse);
+        mPrayerView = (TextView) findViewById(R.id.prayer);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            mTextView.setLetterSpacing(0.3f);
+            mTitleView.setLetterSpacing(0.3f);
         }
 
+        setupScrollListener();
         asyncLoadImage(R.drawable.forest);
+        loadPromise();
+    }
+
+    private void setupScrollListener() {
+        ((MyScrollView) findViewById(R.id.scrollview)).setOnScrollListener(new MyScrollView.ScrollViewListener() {
+            @Override
+            public void onScrollChanged(ScrollView scrollView, int x, int y, int oldx, int oldy) {
+                float imageAlpha = (BLUR_Y_THRESHOLD - y) / BLUR_Y_THRESHOLD;
+                imageAlpha = Math.max(imageAlpha, 0.0f);
+
+                mBackgroundView.setAlpha(imageAlpha);
+
+                float overlayAlpha = (1f - imageAlpha) * MAX_OVERLAY_ALPHA;
+                overlayAlpha = Math.max(overlayAlpha, MIN_OVERLAY_ALPHA);
+                mOverlayView.setAlpha(overlayAlpha);
+            }
+        });
+    }
+
+    private void loadPromise() {
+        Promises.Promise promise = getPromise();
+        mTitleView.setText(promise.title);
+        mVerseView.setText(promise.verse);
+        mPrayerView.setText(promise.prayer);
     }
 
     private Promises.Promise getPromise() {
