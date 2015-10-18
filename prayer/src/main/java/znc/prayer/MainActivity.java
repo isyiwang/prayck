@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
@@ -19,6 +20,7 @@ import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.commit451.nativestackblur.NativeStackBlur;
 import com.flaviofaria.kenburnsview.KenBurnsView;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
@@ -27,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final int FADE_IN_TEXT_MS = 5000;
     private static final int ZOOM_IN_TEXT_MS = 25000;
+    private static final int BLUR_RADIUS = 30;
 
     private ImageView mBackgroundView;
     private KenBurnsView mBlurredBackgroundView;
@@ -131,8 +134,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             protected Bitmap doInBackground(Void... params) {
-//                return BitmapFactory.blur(bitmap, 30);
-                return null;
+                return NativeStackBlur.process(bitmap, BLUR_RADIUS);
             }
 
             @Override
