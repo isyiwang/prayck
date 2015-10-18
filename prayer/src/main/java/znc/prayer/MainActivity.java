@@ -1,9 +1,13 @@
 package znc.prayer;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
     private static final float BLUR_Y_THRESHOLD = 400f;
     private static final float MIN_OVERLAY_ALPHA = 0.1f;
     private static final float MAX_OVERLAY_ALPHA = 0.33f;
+
+    public static final String PROMISE_INDEX_KEY = "PROMISE_INDEX_KEY";
 
     private ImageView mBackgroundView;
     private ImageView mBlurredBackgroundView;
@@ -52,7 +58,22 @@ public class MainActivity extends AppCompatActivity {
 
         setupScrollListener();
         asyncLoadImage(R.drawable.forest);
-        loadPromise();
+
+        int promiseIndex = 0;
+        if (getIntent() != null) {
+            promiseIndex = getIntent().getIntExtra(PROMISE_INDEX_KEY, 0);
+        }
+
+        loadPromise(promiseIndex);
+
+        // DEBUG
+        findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, AlarmReceiver.class);
+                MainActivity.this.getApplicationContext().sendBroadcast(intent);
+            }
+        });
     }
 
     private void setupScrollListener() {
@@ -71,24 +92,11 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void loadPromise() {
-        Promises.Promise promise = getPromise();
+    private void loadPromise(int promiseIndex) {
+        Promises.Promise promise = Promises.PROMISES.get(promiseIndex);
         mTitleView.setText(promise.title);
         mVerseView.setText(promise.verse);
         mPrayerView.setText(promise.prayer);
-    }
-
-    private Promises.Promise getPromise() {
-        int promiseIndex = getPromiseIndex();
-        return Promises.PROMISES.get(promiseIndex);
-    }
-
-    /**
-     * Reads the current promise index from SharedPreferences
-     * @return
-     */
-    private int getPromiseIndex() {
-        return 0;
     }
 
     private void asyncLoadImage(final int resId) {

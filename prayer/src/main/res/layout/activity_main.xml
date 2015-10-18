@@ -60,6 +60,12 @@
                 android:textSize="20dp"
                 android:textStyle="bold"
                 android:gravity="start" />
+
+            <Button
+                android:id="@+id/button"
+                android:text="Test alarm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
         </LinearLayout>
     </znc.prayer.MyScrollView>
 </RelativeLayout>
