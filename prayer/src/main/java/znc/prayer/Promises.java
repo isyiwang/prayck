@@ -7,10 +7,12 @@ import java.util.ArrayList;
  */
 public class Promises {
     public static class Promise {
-        public String verse;
-        public String prayer;
+        public final String title;
+        public final String verse;
+        public final String prayer;
 
-        Promise(String verse, String prayer) {
+        Promise(String title, String verse, String prayer) {
+            this.title = title;
             this.verse = verse;
             this.prayer = prayer;
         }
@@ -18,7 +20,7 @@ public class Promises {
 
     public static final ArrayList<Promise> PROMISES = new ArrayList<Promise>() {
         {
-            add(new Promise("This is a test verse that I'm adding\n\nExodus 4:14", "This is a test prayer"));
+            add(new Promise("God's Promise of Hope", "This is a test verse that I'm adding\n\nExodus 4:14", "This is a test prayer"));
         }
     };
 }
