@@ -39,6 +39,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (!hasFinishedGate()) {
+            startActivity(new Intent(this, GateActivity.class));
+            finish();
+        }
+
         setContentView(R.layout.activity_main);
 
         mBackgroundView = (ImageView) findViewById(R.id.background);
@@ -74,6 +80,12 @@ public class MainActivity extends AppCompatActivity {
                 MainActivity.this.getApplicationContext().sendBroadcast(intent);
             }
         });
+    }
+
+    private boolean hasFinishedGate() {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+
+        return sp.getBoolean(GateActivity.SP_GATE_KEY, false);
     }
 
     private void setupScrollListener() {
