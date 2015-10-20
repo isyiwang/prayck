@@ -29,5 +29,7 @@
 
         <activity android:name=".GateActivity" />
 
+        <activity android:name=".OnboardingActivity" />
+
     </application>
 </manifest>

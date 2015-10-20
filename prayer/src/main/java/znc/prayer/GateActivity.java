@@ -42,7 +42,8 @@ public class GateActivity extends Activity {
     }
 
     private void goToNext() {
-        startActivity(new Intent(this, MainActivity.class));
+        overridePendingTransition(R.anim.enter, R.anim.leave);
+        startActivity(new Intent(this, OnboardingActivity.class));
         finish();
     }
 

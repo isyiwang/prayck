@@ -83,6 +83,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean hasFinishedGate() {
+        if (true) return false;
+
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
 
         return sp.getBoolean(GateActivity.SP_GATE_KEY, false);
