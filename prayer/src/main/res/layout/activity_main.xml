@@ -47,8 +47,9 @@
                 style="@style/TextStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-light"
+                android:textStyle="italic"
                 android:padding="25dp"
-                android:textStyle="bold"
                 android:gravity="center" />
 
             <TextView
@@ -56,9 +57,10 @@
                 style="@style/TextStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-light"
                 android:padding="25dp"
                 android:textSize="20dp"
-                android:textStyle="bold"
+                android:textStyle="normal"
                 android:gravity="start" />
 
             <Button
