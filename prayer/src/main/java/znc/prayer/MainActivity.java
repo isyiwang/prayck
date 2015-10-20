@@ -51,16 +51,10 @@ public class MainActivity extends AppCompatActivity {
         mOverlayView = findViewById(R.id.overlay_view);
         mOverlayView.setAlpha(MIN_OVERLAY_ALPHA);
         mBlurredBackgroundView = (ImageView) findViewById(R.id.blurred_background);
-        Typeface typeface = Typeface.createFromAsset(getAssets(), "questrial.ttf");
         mTitleView = (TextView) findViewById(R.id.title);
-        mTitleView.setTypeface(typeface);
 
         mVerseView = (TextView) findViewById(R.id.verse);
         mPrayerView = (TextView) findViewById(R.id.prayer);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            mTitleView.setLetterSpacing(0.3f);
-        }
 
         setupScrollListener();
         asyncLoadImage(R.drawable.forest);
@@ -83,8 +77,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean hasFinishedGate() {
-        if (true) return false;
-
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
 
         return sp.getBoolean(GateActivity.SP_GATE_KEY, false);
