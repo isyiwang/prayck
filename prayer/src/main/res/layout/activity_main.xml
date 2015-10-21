@@ -36,20 +36,21 @@
                 style="@style/TextStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="25dp"
-                android:layout_marginTop="@dimen/title_margin"
-                android:layout_marginBottom="@dimen/title_margin"
-                android:textStyle="bold"
-                android:gravity="center" />
+                android:layout_marginBottom="@dimen/section_margin"
+                android:textSize="40dp"
+                android:shadowColor="#444444"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="35"
+                android:gravity="start" />
 
             <TextView
                 android:id="@+id/verse"
                 style="@style/TextStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-light"
                 android:textStyle="italic"
-                android:padding="25dp"
+                android:layout_marginBottom="@dimen/section_margin"
                 android:gravity="center" />
 
             <TextView
@@ -57,9 +58,6 @@
                 style="@style/TextStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-light"
-                android:padding="25dp"
-                android:textSize="20dp"
                 android:textStyle="normal"
                 android:gravity="start" />
 
