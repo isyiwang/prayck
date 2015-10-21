@@ -14,6 +14,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.flurry.android.FlurryAgent;
+
 /**
  * Created by isaac on 10/19/15.
  */
@@ -68,6 +70,20 @@ public class GateActivity extends Activity {
                 keyboard.showSoftInput(mPasswordView, 0);
             }
         }, 200);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        FlurryAgent.onStartSession(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        FlurryAgent.onEndSession(this);
     }
 
     private void goToNext() {

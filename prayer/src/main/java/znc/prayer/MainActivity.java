@@ -19,6 +19,8 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.commit451.nativestackblur.NativeStackBlur;
+import com.crittercism.app.Crittercism;
+import com.flurry.android.FlurryAgent;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -92,6 +94,20 @@ public class MainActivity extends AppCompatActivity {
                 loadPromise(++mPromiseIndex);
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        FlurryAgent.onStartSession(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        FlurryAgent.onEndSession(this);
     }
 
     private void updateTextMargin() {
