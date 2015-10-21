@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -37,11 +38,13 @@ public class MainActivity extends AppCompatActivity {
     private TextView mVerseView;
     private TextView mPrayerView;
 
+    private int mPromiseIndex;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
 
         if (!hasFinishedGate()) {
             startActivity(new Intent(this, GateActivity.class));
@@ -49,6 +52,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         setContentView(R.layout.activity_main);
+
+        if (Build.VERSION.SDK_INT >= 21) {
+            getWindow().setStatusBarColor(getResources().getColor(R.color.transparent));
+        }
 
         mBackgroundView = (ImageView) findViewById(R.id.background);
         mOverlayView = findViewById(R.id.overlay_view);
@@ -66,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
         if (getIntent() != null) {
             promiseIndex = getIntent().getIntExtra(PROMISE_INDEX_KEY, 0);
         }
+        mPromiseIndex = promiseIndex;
 
         loadPromise(promiseIndex);
 
@@ -75,6 +83,13 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, AlarmReceiver.class);
                 MainActivity.this.getApplicationContext().sendBroadcast(intent);
+            }
+        });
+
+        findViewById(R.id.next_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadPromise(++mPromiseIndex);
             }
         });
     }
@@ -117,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadPromise(int promiseIndex) {
-        Promises.Promise promise = Promises.PROMISES.get(promiseIndex);
+        Promises.Promise promise = Promises.PROMISES.get(promiseIndex % Promises.PROMISES.size());
         mTitleView.setText(promise.title);
         mVerseView.setText(promise.verse);
         mPrayerView.setText(promise.prayer);

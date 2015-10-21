@@ -66,6 +66,12 @@
                 android:text="Test alarm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/next_button"
+                android:text="Show next day"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
         </LinearLayout>
     </znc.prayer.MyScrollView>
 </RelativeLayout>
