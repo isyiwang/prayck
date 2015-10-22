@@ -37,11 +37,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/section_margin"
-                android:textSize="40dp"
-                android:shadowColor="#444444"
-                android:shadowDx="1"
-                android:shadowDy="1"
-                android:shadowRadius="35"
+                android:textSize="30dp"
                 android:gravity="start" />
 
             <TextView

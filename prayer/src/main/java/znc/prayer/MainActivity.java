@@ -7,9 +7,9 @@ import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +19,6 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.commit451.nativestackblur.NativeStackBlur;
-import com.crittercism.app.Crittercism;
 import com.flurry.android.FlurryAgent;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
@@ -27,9 +26,9 @@ import com.squareup.picasso.Picasso;
 public class MainActivity extends AppCompatActivity {
 
     private static final int BLUR_RADIUS = 50;
-    private static final float BLUR_Y_THRESHOLD = 400f;
-    private static final float MIN_OVERLAY_ALPHA = 0.1f;
-    private static final float MAX_OVERLAY_ALPHA = 0.33f;
+    private static final float BLUR_Y_THRESHOLD = 525f;
+    private static final float MIN_OVERLAY_ALPHA = 0.2f;
+    private static final float MAX_OVERLAY_ALPHA = 0.55f;
 
     public static final String PROMISE_INDEX_KEY = "PROMISE_INDEX_KEY";
 
